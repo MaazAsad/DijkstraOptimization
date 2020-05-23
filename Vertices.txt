@@ -1,0 +1,12 @@
+Seattle,47,-122
+SanFrancisco,38,-122
+LosAngeles,34,-118
+LasVegas,36,-115
+Denver,40,-105
+Minneapolis,45,-93
+Chicago,42,-88
+WashingtonDC,38,-77
+Miami,26,-80
+Dallas,33,-97
+NewYork,40,-73
+Boston,42,-72
