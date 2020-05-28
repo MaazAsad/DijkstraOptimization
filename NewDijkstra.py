@@ -120,19 +120,90 @@ def shortest(v, path):
 
 
 import math
+import heapq
 
-def Dijkstra(Graph,Start,End):
-    #yolo
-    #constraint weight
+# def Dijkstra(Graph,Start,End):
+#     #yolo
+#     #constraint weight
+#     Omega_u = float(2000)
+#     AngleLowerBound = -0.5 * math.pi
+#     AngleUpperBound = 0.5 * math.pi
+
+#     Start.set_distance(0)
+
+#     openList = Start.get_connections()
+#     heapq.heapify(openList)
+
+#     source = Start
+#     source.set_visited()
+#     source_lattitude = Start.get_Lattitude()
+#     source_longitude = Start.get_Longitude()
+
+#     dest_lattitude = End.get_Lattitude()
+#     dest_longitude = End.get_Longitude()
+
+#     x1 = dest_lattitude - source_lattitude
+#     y1 = dest_longitude - source_longitude
+#     counter =0
+
+#     while len(openList):
+
+#         print("Exec %d" %(counter))
+#         a = input()
+#         counter+=1
+
+#         #update weights of the edges based on new constraint
+#         for i in openList:            
+#             if(i.get_id().strip() != Start.get_id().strip()):
+#                 curr_lattitude = i.get_Lattitude()
+#                 curr_longitude = i.get_Longitude()
+
+#                 x2 = source_lattitude - curr_lattitude
+#                 y2 = source_longitude - curr_longitude
+
+#                 x = x1 * x2 + y1* y2
+#                 y = math.sqrt( pow(x1,2) + pow(y1,2) ) * math.sqrt( pow(x2,2) + pow(y2,2) )
+
+#                 x = x/y
+#                 if(AngleLowerBound < x and  x < AngleUpperBound):
+#                     new_weight = Omega_u * x
+#                     new_weight =  source.get_weight(i) + new_weight
+
+#                     print("Updating weight for %s" %(i.get_id()))
+#                     if ( new_weight < i.get_distance() ):
+                        
+#                         i.set_distance(new_weight)
+#                         i.set_visited()
+#                         i.set_previous(source.get_id())
+
+        
+#         #select minimum weighted egde
+#         temp = list(openList)[1]
+#         for i in openList:
+#             if (temp.get_distance() < i.get_distance()  and i.get_id().strip() != Start.get_id().strip()):
+#                 temp = i
+
+#         print("Minumum node: %s with weight %s " % (temp.get_id(), temp.get_distance()))
+#         #check if thee minimum node is the target node
+#         if(temp.get_id().strip() == End.get_id().strip()):
+#             return
+        
+#         source = Graph.get_vertex(temp.get_id().strip())
+#         openList = source.get_connections()
+        
+
+def dijkstra(aGraph, Start, End):
+    print ('''Dijkstra's shortest path''')
+
+    #Constraint Weights
     Omega_u = float(2000)
     AngleLowerBound = -0.5 * math.pi
     AngleUpperBound = 0.5 * math.pi
 
-    Start.set_distance(0)
 
-    openList = Start.get_connections()
-    source = Start
-    source.set_visited()
+    # Set the distance for the start node to zero 
+    Start.set_distance(0)
+    Start.set_visited()
     source_lattitude = Start.get_Lattitude()
     source_longitude = Start.get_Longitude()
 
@@ -141,55 +212,53 @@ def Dijkstra(Graph,Start,End):
 
     x1 = dest_lattitude - source_lattitude
     y1 = dest_longitude - source_longitude
-    counter =0
 
-    while len(openList):
+    # Put tuple pair into the priority queue
+    unvisited_queue = [(v.get_distance(),v) for v in aGraph]
+    heapq.heapify(unvisited_queue)
 
-        print("Exec %d" %(counter))
-        a = input()
-        counter+=1
+    while len(unvisited_queue):
+        # Pops a vertex with the smallest distance 
+        uv = heapq.heappop(unvisited_queue)
+        current = uv[1]
+        current.set_visited()
 
-        #update weights of the edges based on new constraint
-        for i in openList:            
-            if(i.get_id() != Start.get_id()):
-                curr_lattitude = i.get_Lattitude()
-                curr_longitude = i.get_Longitude()
+        #for next in v.adjacent:
+        for next in current.adjacent:
+            # if visited, skip
+            if next.visited:
+                continue
 
-                x2 = source_lattitude - curr_lattitude
-                y2 = source_longitude - curr_longitude
+            curr_lattitude = next.get_Lattitude()
+            curr_longitude = next.get_Longitude()
 
-                x = x1 * x2 + y1* y2
-                y = math.sqrt( pow(x1,2) + pow(y1,2) ) * math.sqrt( pow(x2,2) + pow(y2,2) )
+            x2 = source_lattitude - curr_lattitude
+            y2 = source_longitude - curr_longitude
 
-                x = x/y
-                if(AngleLowerBound < x and  x < AngleUpperBound):
-                    new_weight = Omega_u * x
-                    new_weight =  source.get_weight(i) + new_weight
+            x = x1 * x2 + y1* y2
+            y = math.sqrt( pow(x1,2) + pow(y1,2) ) * math.sqrt( pow(x2,2) + pow(y2,2) )
 
-                    print("Updating weight for %s" %(i.get_id()))
-                    if ( new_weight < i.get_distance() ):
-                        
-                        i.set_distance(new_weight)
-                        i.set_visited()
-                        i.set_previous(source.get_id())
+            x = x/y
 
-        
-        #select minimum weighted egde
-        temp = list(openList)[0]
-        for i in openList:
-            if (temp.get_distance() < i.get_distance()  and i.get_id() != Start.get_id()):
-                temp = i
+            if(AngleLowerBound < x and  x < AngleUpperBound):
+                new_weight = Omega_u * x
+                new_dist = current.get_distance() + current.get_weight(next) + new_weight
+                
+                if new_dist < next.get_distance():
+                    next.set_distance(new_dist)
+                    next.set_previous(current)
+                    print ('updated : current = %s next = %s new_dist = %s' % (current.get_id(), next.get_id(), next.get_distance()))
+                else:
+                    print ('not updated : current = %s next = %s new_dist = %s' %(current.get_id(), next.get_id(), next.get_distance()))
 
-        print("Minumum node: %s with weight %s " % (temp.get_id(), temp.get_distance()))
-        #check if thee minimum node is the target node
-        if(temp.get_id() == End):
-            return
-        
-        source = Graph.get_vertex(temp.get_id())
-        openList = source.get_connections()
-        
-
-        
+        # Rebuild heap
+        # 1. Pop every item
+        while len(unvisited_queue):
+            heapq.heappop(unvisited_queue)
+        # 2. Put all vertices not visited into the queue
+        unvisited_queue = [(v.get_distance(),v) for v in aGraph if not v.visited]
+        heapq.heapify(unvisited_queue)
+    
 
         
 
@@ -239,7 +308,7 @@ if __name__ == "__main__":
 
     start_time = time.time()
 
-    Dijkstra(g, g.get_vertex('Seattle'), g.get_vertex('WashingtonDC')) 
+    dijkstra(g, g.get_vertex('Seattle'), g.get_vertex('WashingtonDC')) 
 
     end_time = time.time()
     target = g.get_vertex('WashingtonDC')
