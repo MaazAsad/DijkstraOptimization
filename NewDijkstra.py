@@ -196,7 +196,7 @@ def dijkstra(aGraph, Start, End):
     print ('''Dijkstra's shortest path''')
 
     #Constraint Weights
-    Omega_u = float(2000)
+    Omega_u = float(1000)
     AngleLowerBound = -0.5 * math.pi
     AngleUpperBound = 0.5 * math.pi
 
@@ -210,8 +210,8 @@ def dijkstra(aGraph, Start, End):
     dest_lattitude = End.get_Lattitude()
     dest_longitude = End.get_Longitude()
 
-    x1 = dest_lattitude - source_lattitude
-    y1 = dest_longitude - source_longitude
+    x1 = dest_lattitude - source_lattitude 
+    y1 = dest_longitude - source_longitude 
 
     # Put tuple pair into the priority queue
     unvisited_queue = [(v.get_distance(),v) for v in aGraph]
@@ -232,8 +232,8 @@ def dijkstra(aGraph, Start, End):
             curr_lattitude = next.get_Lattitude()
             curr_longitude = next.get_Longitude()
 
-            x2 = source_lattitude - curr_lattitude
-            y2 = source_longitude - curr_longitude
+            x2 = curr_lattitude - source_lattitude 
+            y2 = curr_longitude - source_longitude 
 
             x = x1 * x2 + y1* y2
             y = math.sqrt( pow(x1,2) + pow(y1,2) ) * math.sqrt( pow(x2,2) + pow(y2,2) )
