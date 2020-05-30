@@ -15,5 +15,19 @@ def test_increment():
 def decrement(x):
     return x+1
 
+# This will fail!
 def test_decrement():
     assert decrement(15) == 14
+
+
+# def expected_result():
+#     return [
+    
+    
+import NewDijkstra as nd
+
+def new_dijkstra():
+    return nd.main()
+
+def test_new_dijkstra():
+    assert new_dijkstra() == ['Seattle', 'Minneapolis', 'Chicago', 'Boston'] 
