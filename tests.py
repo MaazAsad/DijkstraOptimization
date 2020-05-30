@@ -31,3 +31,13 @@ def new_dijkstra():
 
 def test_new_dijkstra():
     assert new_dijkstra() == ['Seattle', 'Minneapolis', 'Chicago', 'Boston'] 
+
+    
+import BasicDijkstra as bd
+
+def basic_dijkstra():
+    return bd.main()
+
+def test_basic_dijkstra():
+    assert basic_dijkstra() == ['Seattle', 'Minneapolis', 'Chicago', 'Boston'] 
+    
