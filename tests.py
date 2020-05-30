@@ -11,3 +11,9 @@ def increment(x):
 
 def test_increment():
     assert increment(15) == 16
+
+def decrement(x):
+    return x+1
+
+def test_decrement():
+    assert decrement(15) == 14
