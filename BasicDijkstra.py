@@ -81,11 +81,11 @@ class Graph:
     def get_previous(self, current):
         return self.previous
 
-def shortest(v, path):
+def shortest_path(v, path):
     ''' make shortest path from v.previous'''
     if v.previous:
         path.append(v.previous.get_id())
-        shortest(v.previous, path)
+        shortest_path(v.previous, path)
     return
 
 import heapq
@@ -127,6 +127,16 @@ def dijkstra(aGraph, start, target):
         unvisited_queue = [(v.get_distance(),v) for v in aGraph if not v.visited]
         heapq.heapify(unvisited_queue)
     
+
+def printGraph(g):
+    print ('Graph data:')
+    for v in g:
+        for w in v.get_connections():
+            vid = v.get_id()
+            wid = w.get_id()
+            print ('( %s , %s, %3d)'  % ( vid, wid, v.get_weight(w)))
+
+
 if __name__ == '__main__':
 
     g = Graph()
@@ -151,20 +161,12 @@ if __name__ == '__main__':
     fileHandle.close()
 
 
-
-    print ('Graph data:')
-    for v in g:
-        for w in v.get_connections():
-            vid = v.get_id()
-            wid = w.get_id()
-            print ('( %s , %s, %3d)'  % ( vid, wid, v.get_weight(w)))
-
     start_time = time.time()
 
     dijkstra(g, g.get_vertex('Seattle'), g.get_vertex('WashingtonDC')) 
 
     target = g.get_vertex('WashingtonDC')
     path = [target.get_id()]
-    shortest(target, path)
+    shortest_path(target, path)
     print ('The shortest path : %s' %(path[::-1]))
     print("--- %s seconds ---" % (time.time() - start_time))
