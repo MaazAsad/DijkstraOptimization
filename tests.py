@@ -1,43 +1,95 @@
 # tests.py
 
-def capital_case(x):
-    return x.capitalize()
+import time   
 
-def test_capital_case():
-    assert capital_case('semaphore') == 'Semaphore'
+verticesFileNames = ["Vertices.txt"]
+edgesFileNames = ["Edges.txt"]
 
-def increment(x):
-    return x+1
-
-def test_increment():
-    assert increment(15) == 16
-
-def decrement(x):
-    return x+1
-
-# This will fail!
-def test_decrement():
-    assert decrement(15) == 14
-
-
-# def expected_result():
-#     return [
-    
     
 import NewDijkstra as nd
 
-def new_dijkstra():
-    return nd.main()
 
+## Test the New Dijkstra on the sample file
 def test_new_dijkstra():
-    assert new_dijkstra() == ['Seattle', 'Minneapolis', 'Chicago', 'Boston'] 
+    global verticesFileNames
+    global edgesFileNames
+
+    for verticesFileName, edgesFileName in zip(verticesFileNames, edgesFileNames):
+        g = nd.Graph()
+
+        ## Read vertices from a file
+        with open(verticesFileName,"r") as fp:
+            lines = fp.readlines()
+            for line in lines:
+                x = line.split(',')
+                g.add_vertex( x[0].strip(), float(x[1].strip()), float(x[2].strip()) )
+
+
+        ## Read edges from a file
+        with open(edgesFileName,"r") as fp:
+            lines = fp.readlines()
+            for line in lines:
+                x = line.split(',')
+                g.add_edge( x[0].strip(), x[1].strip(), float(x[2].strip()))
+
+
+        ## print Graph
+        nd.printGraph(g)
 
     
+        start_time = time.time()
+        nd.dijkstra(g, g.get_vertex('Seattle'), g.get_vertex('WashingtonDC')) 
+        end_time = time.time()
+
+        destination = g.get_vertex('WashingtonDC')
+        path = [destination.get_id()]
+        nd.shortest_path(destination, path)    
+
+        assert path[::-1] == ['Seattle', 'Minneapolis', 'Chicago', 'WashingtonDC'] 
+
+        print("============= Time Taken =", end_time-start_time, "=============")
+
+
+
+
+
 import BasicDijkstra as bd
 
-def basic_dijkstra():
-    return bd.main()
-
+## Test the basic Dijkstra on the sample file    
 def test_basic_dijkstra():
-    assert basic_dijkstra() == ['Seattle', 'Minneapolis', 'Chicago', 'Boston'] 
+    global verticesFileNames
+    global edgesFileNames
+
+    for verticesFileName, edgesFileName in zip(verticesFileNames, edgesFileNames):
+        g = bd.Graph()
+
+        ## Read vertices from a file
+        with open(verticesFileName,"r") as fp:
+            lines = fp.readlines()
+            for line in lines:
+                g.add_vertex(line.strip())
+
+
+        ## Read edges from a file
+        with open(edgesFileName,"r") as fp:
+            lines = fp.readlines()
+            for line in lines:
+                x = line.split(',')
+                g.add_edge( x[0].strip(), x[1].strip(), float(x[2].strip()))
+
+
+        ## print Graph
+        bd.printGraph(g)
+
     
+        start_time = time.time()
+        bd.dijkstra(g, g.get_vertex('Seattle'), g.get_vertex('WashingtonDC')) 
+        end_time = time.time()
+
+        destination = g.get_vertex('WashingtonDC')
+        path = [destination.get_id()]
+        bd.shortest_path(destination, path)    
+
+        assert path[::-1] == ['Seattle', 'Minneapolis', 'Chicago', 'WashingtonDC'] 
+
+        print("============= Time Taken =", end_time-start_time, "=============")
