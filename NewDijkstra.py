@@ -131,7 +131,8 @@ import math
 import heapq
 
 def dijkstra(theGraph, Start, End):
-    print ('''Dijkstra's shortest path''')
+    print("\n\n")
+    print ('''= = = = = = = = = New Dijkstra's shortest path = = = = = = = = = ''')
 
     #Constraint Weights
     Omega_u = float(1000)
@@ -180,14 +181,16 @@ def dijkstra(theGraph, Start, End):
 
             if(AngleLowerBound < x and  x < AngleUpperBound):
                 new_weight = Omega_u * x
-                new_dist = current.get_distance() + current.get_edge_weight(next) + new_weight
+                new_distance = current.get_distance() + current.get_edge_weight(next) + new_weight
                 
-                if new_dist < next.get_distance():
-                    next.set_distance(new_dist)
+                if new_distance < next.get_distance():
+                    next.set_distance(new_distance)
                     next.set_previous(current)
-                    print ('updated : current = %s next = %s new_dist = %s' % (current.get_id(), next.get_id(), next.get_distance()))
+                    fmt = '{0:<30}: {1:>10.2f} (Updated)'
+                    print (fmt.format(current.get_id() + " -> " + next.get_id(), next.get_distance()))
                 else:
-                    print ('not updated : current = %s next = %s new_dist = %s' %(current.get_id(), next.get_id(), next.get_distance()))
+                    fmt = '{0:<30}= {1:>10.2f} (Not Updated)'
+                    print (fmt.format(current.get_id() + " -> " + next.get_id(), next.get_distance()))
 
         # Rebuild heap
         # 1. Pop every item
@@ -199,12 +202,14 @@ def dijkstra(theGraph, Start, End):
     
 
 def printGraph(g):
+    print ('\n')
     print ('The Graph is:')
-    for v in g:
-        for w in v.get_connections():
-            vid = v.get_id()
-            wid = w.get_id()
-            print ('( %s -> %s\t\t%3d)'  % ( vid, wid, v.get_edge_weight(w)))
+    for vertex in g:
+        for w in vertex.get_connections():
+            v_id = vertex.get_id()
+            w_id = w.get_id()
+            fmt = '{0:<30} --- {1:>10.2f}'
+            print (fmt.format(v_id + " -> " + w_id, vertex.get_edge_weight(w)))
         
 
 # Main Function

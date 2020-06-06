@@ -2,12 +2,11 @@
 
 import time   
 
-verticesFileNames = ["Vertices.txt"]
-edgesFileNames = ["Edges.txt"]
+verticesFileNames = ["Vertices.txt"] ## you can add more tests here
+edgesFileNames = ["Edges.txt"] ## you can add more tests here
 
     
 import NewDijkstra as nd
-
 
 ## Test the New Dijkstra on the sample file
 def test_new_dijkstra():
