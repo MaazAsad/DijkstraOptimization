@@ -15,7 +15,7 @@ After installing pytest and numpy via
 >        pip install numpy
 
 Run the test program with
->        pytest tests.py -vv --durations=2 -spytest -s
+>        pytest tests.py -vv --durations=2 -s 
 
 Or the separate algorithms
 >        python BasicDijkstra.py
