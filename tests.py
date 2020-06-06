@@ -9,7 +9,7 @@ edgesFileNames = ["Edges.txt"] ## you can add more tests here
 import NewDijkstra as nd
 
 ## Test the New Dijkstra on the sample file
-def test_new_dijkstra():
+def new_dijkstra():
     global verticesFileNames
     global edgesFileNames
 
@@ -44,9 +44,13 @@ def test_new_dijkstra():
         path = [destination.get_id()]
         nd.shortest_path(destination, path)    
 
-        assert path[::-1] == ['Seattle', 'Minneapolis', 'Chicago', 'WashingtonDC'] 
+        # assert path[::-1] == ['Seattle', 'Minneapolis', 'Chicago', 'WashingtonDC'] 
 
         print("============= Time Taken =", end_time-start_time, "=============")
+
+        print ("Shortest path is ", path[::-1])
+        
+        return path[::-1]
 
 
 
@@ -55,7 +59,7 @@ def test_new_dijkstra():
 import BasicDijkstra as bd
 
 ## Test the basic Dijkstra on the sample file    
-def test_basic_dijkstra():
+def basic_dijkstra():
     global verticesFileNames
     global edgesFileNames
 
@@ -89,6 +93,13 @@ def test_basic_dijkstra():
         path = [destination.get_id()]
         bd.shortest_path(destination, path)    
 
-        assert path[::-1] == ['Seattle', 'Minneapolis', 'Chicago', 'WashingtonDC'] 
+        # assert path[::-1] == ['Seattle', 'Minneapolis', 'Chicago', 'WashingtonDC'] 
+
+        print ("Shortest path is ", path[::-1])
 
         print("============= Time Taken =", end_time-start_time, "=============")
+
+        return path[::-1]
+
+def test_bothEqual():
+    assert basic_dijkstra() == new_dijkstra()
