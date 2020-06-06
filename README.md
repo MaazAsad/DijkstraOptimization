@@ -8,3 +8,9 @@ The Algorithm we were to implement was "An Improved Dijkstra Shortest Path Algor
 - Python 3.7+
 - Numpy
 - Pytest and GitHub Actions for CI Testing
+
+## How to create a sample file
+Structure the Vertices as given in Vertices.txt in one file, and structure the Edges as given in Edges.txt in another file (The structure is determined for the new Dijkstra Algorithm, the old one ignore the Lat/Long values). The current sample file represents the below graph:
+![Sample graph](usa.png?raw=true)
+
+Then add the filenames in the arrays in pytest, called "verticesFileNames" and "edgesFileNames".
