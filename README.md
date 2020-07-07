@@ -1,4 +1,5 @@
 # DijkstraOptimization
+![Python application](https://github.com/MaazAsad/DijkstraOptimization/workflows/Python%20application/badge.svg)
 Algorithms Project, Batch 18.
 
 ## Abstract
